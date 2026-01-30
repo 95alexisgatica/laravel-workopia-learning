@@ -1,44 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/jobs',function() {
-    return 'available Jobs';
-});
+    //1. puedo pasar variable de distintas formas esta es una
+    // $title = 'Availabel Jobs';
 
-Route::get('/test', function() {
-    return response('Hello Word', 200);
-});
+    // return view('jobs.index')->with('title',$title);
 
-// Route::get('/notfound', function() {
-//     return response('Page not found', 404);
-// });
+    //2. tambien la forma reducida
+    // return view('jobs.index', [
+    //     'title' => 'Available Jobs' 
+    // ]);
 
-Route::get('/notfound', function() {
-    // puedo modificar el header 
-    // return new Response('Page not found', 404)->header('Content-Type', 'test/html');
-});
+    //3.compact form
+    $title = 'Availabel Jobs';
+    $jobs = [
+        'web development',
+        'database admin',
+        'systems analyst'
+    ];
 
-Route::get('/test', function() {
-    //puedo devolver arrays
-    // return response()->json(['name' => 'alexio']);
+    return view('jobs.index', compact('title','jobs'));
 
-    //agregar datos a las cookies
-    return response()->json(['name' => 'alexio'])->cookie('name', 'Alexio Atun');
-});
-
-Route::get('/read-cookie', function(Request $request) {
-    $cookieValue = $request->cookie('name');
-    return response()->json(['cookie' => $cookieValue]);
-});
-
-Route::get('/download', function() {
-    //puedo devolver arrays
-    return response()->download(public_path('favicon.ico'));
-});
+})->name('jobs');
