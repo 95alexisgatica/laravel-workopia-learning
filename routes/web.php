@@ -1,20 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/jobs',function() {
-
-    $title = 'Availabel Jobs';
-    $jobs = [
-        'web development',
-        'database admin',
-        'systems analyst'
-    ];
-
-    return view('jobs.index', compact('title','jobs'));
-
-})->name('jobs');
+Route::get('/jobs', [JobController::class, 'index']);
+Route::get('/jobs/crete', [JobController::class, 'create']);

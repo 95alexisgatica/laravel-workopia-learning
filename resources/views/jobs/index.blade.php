@@ -9,20 +9,6 @@
 
 <body>
     <h1>{{ $title }}</h1>
-    {{-- @if (!empty($jobs))
-        <ul>
-            @foreach ($jobs as $job)
-                <li>
-                    {{ $job }}
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p>No hay trabajos disponibles</p>
-    @endif --}}
-
-    {{-- FORELSE --}}
-    {{-- LOOP - distintas directivas para el loop --}}
     <ul>
         @forelse ($jobs as $job)
             <li>{{ $loop->index }} - {{ $job }}</li>
