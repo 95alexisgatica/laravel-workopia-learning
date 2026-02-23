@@ -9,11 +9,15 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>{{ $title ?? 'Welcome To Workcopia' }}</title>
 </head>
 
 <body class="bg-gray-100">
     <x-header />
+    @if (request()->is('/'))
+        <x-hero title="Find Your Dream Job" />
+    @endif
     <main class="container mx-auto p-4 mt-4">
         {{ $slot }}
     </main>
