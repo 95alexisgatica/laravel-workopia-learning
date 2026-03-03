@@ -10,5 +10,21 @@ class Job extends Model
     protected $table = 'job_listings';
 
     //vamos a usar eso para que este disponible llenar los datos con tinker
-    protected $fillable = ['title', 'description'];
+    protected $fillable = [
+        'salary',
+        'tags',
+        'job_type',
+        'remote',
+        'requirements',
+        'benefits',
+        'adress',
+        'city',
+        'state',
+        'zipcode',
+        'contact_email',
+        'contact_phone',
+        'company_name',
+        'company_description',
+        'company_logo'
+    ];
 }
