@@ -3,14 +3,14 @@
     <h1>Create New Job</h1>
     <form action="/jobs" method="POST">
         @csrf
-        <div>
-            <input type="text" name="title" placeholder="title">
+        <div class="my-5">
+            <input type="text" name="title" placeholder="title" value={{ old('title') }}>
             @error('title')
                 <div class="text-red-500 mt-2 trxt-sm">{{ $message }}</div>
             @enderror
         </div>
-        <div>
-            <input type="text" name="description" placeholder="description">
+        <div class= "mb-5">
+            <input type="text" name="description" placeholder="description" value={{ old('description') }}>
             @error('description')
                 <div class="text-red-500 mt-2 trxt-sm">{{ $message }}</div>
             @enderror

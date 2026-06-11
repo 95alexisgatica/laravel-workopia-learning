@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Job extends Model
 {
-    //si el nombre de la atbal con coincide con el modelo :
+    //si el nombre de la tabla con coincide con el modelo :
     protected $table = 'job_listings';
 
     //vamos a usar eso para que este disponible llenar los datos con tinker
@@ -25,6 +26,14 @@ class Job extends Model
         'contact_phone',
         'company_name',
         'company_description',
-        'company_logo'
+        'company_logo',
+        'user_id',
     ];
+
+    //relation con el modelo user
+    //belongsTo porque un job pertenece a un user
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
