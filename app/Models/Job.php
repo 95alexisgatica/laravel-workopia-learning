@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Job extends Model
 {
+    use HasFactory;
     //si el nombre de la tabla con coincide con el modelo :
     protected $table = 'job_listings';
 
@@ -28,6 +31,9 @@ class Job extends Model
         'company_description',
         'company_logo',
         'user_id',
+        'title',
+        'description',
+        'company_website',
     ];
 
     //relation con el modelo user
