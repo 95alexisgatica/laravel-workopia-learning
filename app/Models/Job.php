@@ -21,7 +21,7 @@ class Job extends Model
         'remote',
         'requirements',
         'benefits',
-        'adress',
+        'address',
         'city',
         'state',
         'zipcode',

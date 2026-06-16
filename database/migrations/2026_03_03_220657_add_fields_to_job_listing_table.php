@@ -20,11 +20,11 @@ return new class extends Migration
 
             $table->integer('salary');
             $table->string('tags')->nullable();
-            $table->enum('job_type', ['Full-time', 'Part-time', 'Contract', 'Internship', 'Volunteer', 'On-call'])->default('Full-time');
+            $table->enum('job_type', ['Full-Time', 'Part-Time', 'Contract', 'Internship', 'Volunteer', 'On-call'])->default('Full-Time');
             $table->boolean('remote')->default(false);
             $table->string('requirements')->nullable();
             $table->string('benefits')->nullable();
-            $table->string('adress')->nullable();
+            $table->string('address')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('zipcode')->nullable();
@@ -55,7 +55,7 @@ return new class extends Migration
                 'remote',
                 'requirements',
                 'benefits',
-                'adress',
+                'address',
                 'city',
                 'state',
                 'zipcode',
