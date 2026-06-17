@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Job;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -74,24 +75,65 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): String
+    public function edit(Job $job): View
     {
-        return 'Edit';
+        return view('jobs.edit')->with('job', $job);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): String
+    public function update(Request $request, Job $job): RedirectResponse
     {
-        return 'Update';
+        $validateData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'salary' => 'required|integer',
+            'tags' => 'nullable|string',
+            'job_type' => 'required|string',
+            'remote' => 'required|boolean',
+            'requirements' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'nullable|string',
+            'state' => 'nullable|string',
+            'zip_code' => 'nullable|string',
+            'contact_email' => 'required|email',
+            'contact_phone' => 'nullable|string',
+            'company_name' => 'nullable|string',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'company_website' => 'nullable|url',
+        ]);
+
+        $validateData['user_id'] = 1; // Asignar un valor fijo para user_id
+
+        if ($request->hasFile('company_logo')) {
+            // Eliminar el logo anterior si existe
+            if ($job->company_logo) {
+                Storage::disk('public')->delete($job->company_logo);
+            }
+
+            $logoPath = $request->file('company_logo')->store('logos', 'public');
+            $validateData['company_logo'] = $logoPath;
+        }
+
+        $job->update($validateData);
+
+        return redirect()->route('jobs.show', $job->id)->with('success', 'Job updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): String
+    public function destroy(Job $job): RedirectResponse
     {
-        return 'Destroy';
+        if ($job->company_logo) {
+            Storage::disk('public')->delete($job->company_logo);
+        }
+
+        $job->delete();
+
+        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
     }
 }
