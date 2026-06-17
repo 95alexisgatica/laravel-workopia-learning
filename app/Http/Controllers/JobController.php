@@ -27,6 +27,7 @@ class JobController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        //dd($request->file('company_logo'));
         $validateData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -44,12 +45,18 @@ class JobController extends Controller
             'contact_phone' => 'nullable|string',
             'company_name' => 'nullable|string',
             'company_description' => 'nullable|string',
-            'company_logo' => 'nullable|image|mime_types:jpeg,png,jpg,gif|max:2048',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'company_website' => 'nullable|url',
 
         ]);
 
         $validateData['user_id'] = 1; // Asignar un valor fijo para user_id
+
+        // Manejar la carga del logo de la empresa
+        if ($request->hasFile('company_logo')) {
+            $logoPath = $request->file('company_logo')->store('logos', 'public');
+            $validateData['company_logo'] = $logoPath;
+        }
 
         Job::create($validateData);
 
