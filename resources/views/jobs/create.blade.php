@@ -42,16 +42,15 @@
                         'Full-Time' => 'Full-Time',
                         'Part-Time' => 'Part-Time',
                         'Contract' => 'Contract',
-                        'Temporary' => 'Temporary',
                         'Internship' => 'Internship',
                         'Volunteer' => 'Volunteer',
-                        'On-Call' => 'On-Call',
+                        'On-call' => 'On-call',
                     ]" />
             </div>
 
             <div class="mb-4">
                 <x-inputs.select id="remote" name="remote" label="Remote" value="{{ old('remote') }}"
-                    :options="['false' => 'No', 'true' => 'Yes']" />
+                    :options="[0 => 'No', 1 => 'Yes']" />
             </div>
 
             <div class="mb-4">
@@ -84,7 +83,7 @@
             </div>
 
             <div class="mb-4">
-                <x-inputs.text id="company_website" name="company_website" label="Company Website"
+                <x-inputs.text id="company_website" name="company_website" type="url" label="Company Website"
                     placeholder="https://www.acme.com" />
             </div>
 
