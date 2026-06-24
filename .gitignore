@@ -27,3 +27,5 @@ openspec/
 .opencode/
 openspec/
 docs/kickstart-workflow/
+opencode.json
+storage/debugbar/

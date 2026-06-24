@@ -8,9 +8,16 @@
             <x-nav-link url='/' :active="request()->is('/')">Home</x-nav-link>
             <x-nav-link url='/jobs' :active="request()->is('jobs')">All Jobs</x-nav-link>
             <x-nav-link url='/jobs/saved' :active="request()->is('jobs/saved')">Saved Jobs</x-nav-link>
-            <x-nav-link url='/login' :active="request()->is('login')">Login</x-nav-link>
-            <x-nav-link url='/register' :active="request()->is('register')">Register</x-nav-link>
-            <x-nav-link url='/dashboard' :active="request()->is('dashboard')" icon="gauge">Dashboard</x-nav-link>
+            @auth
+                <x-nav-link url='/dashboard' :active="request()->is('dashboard')" icon="gauge">Dashboard</x-nav-link>
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="text-white hover:underline py-2">Logout</button>
+                </form>
+            @else
+                <x-nav-link url='/login' :active="request()->is('login')">Login</x-nav-link>
+                <x-nav-link url='/register' :active="request()->is('register')">Register</x-nav-link>
+            @endauth
 
             <x-button-link url='/jobs/create' icon="edit">Create Job</x-button-link>
         </nav>
@@ -22,9 +29,16 @@
     <nav id="mobile-menu" class=" md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
         <x-nav-link url='/jobs' :active="request()->is('jobs')" :mobile="true">All Jobs</x-nav-link>
         <x-nav-link url='/jobs/saved' :active="request()->is('jobs/saved')" :mobile="true">Saved Jobs</x-nav-link>
-        <x-nav-link url='/login' :active="request()->is('login')" :mobile="true">Login</x-nav-link>
-        <x-nav-link url='/register' :active="request()->is('register')" :mobile="true">Register</x-nav-link>
-        <x-nav-link url='/dashboard' :active="request()->is('dashboard')" :mobile="true">Dashboard</x-nav-link>
+        @auth
+            <x-nav-link url='/dashboard' :active="request()->is('dashboard')" :mobile="true">Dashboard</x-nav-link>
+            <form method="POST" action="{{ route('logout') }}" class="block px-4 py-2">
+                @csrf
+                <button type="submit" class="text-white hover:underline">Logout</button>
+            </form>
+        @else
+            <x-nav-link url='/login' :active="request()->is('login')" :mobile="true">Login</x-nav-link>
+            <x-nav-link url='/register' :active="request()->is('register')" :mobile="true">Register</x-nav-link>
+        @endauth
 
         <x-button-link url='/jobs/create' icon="edit" :block="true">Create Job</x-button-link>
 
