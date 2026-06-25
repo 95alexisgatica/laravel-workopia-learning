@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Job;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -20,8 +21,13 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
-    {
+    public function create(): RedirectResponse|View
+    {   //es la forma menos practica de proteger una ruta.
+
+    //        if (!Auth::check()) {
+    //            return redirect()->route('login');
+    //        }
+
         return view('jobs.create');
     }
 
