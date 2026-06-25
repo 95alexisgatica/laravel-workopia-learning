@@ -18,16 +18,25 @@ class JobSeeder extends Seeder
         //aqui se pueden agregar trabajos manualmente o usar un factory para generar datos aleatorios
         $jobListings = include database_path('seeders/data/job_listings.php');
 
-        //conseguimos los ids de los usuarios para asignarles trabajos
-        $userIds = User::class::pluck('id')->toArray();
+        //obtenemos el id del usuario de prueba para asignarle los trabajos
+        $testUserId = User::where('email', 'test@test.com')->value('id');
 
-        foreach ($jobListings as $key => $job) {
-            //asignamos un user_id aleatorio de los usuarios existentes
-            $jobListings[$key]['user_id'] = $userIds[array_rand($userIds)];
+        //conseguimos todos los ids de los usuarios para asignarles trabajos
+        $userIds = User::where('email', '!=', 'test@test.com')->pluck('id')->toArray();
+
+        foreach ($jobListings as $index => &$listing) {
+
+            if ($index < 2) {
+                //asignamos un user_id aleatorio de los usuarios existentes
+                $listing['user_id'] = $testUserId;
+            } else {
+                //asignamos un user_id aleatorio de los usuarios existentes
+                $listing['user_id'] = $userIds[array_rand($userIds)];
+            }
 
             //agregar timestamps
-            $jobListings[$key]['created_at'] = now();
-            $jobListings[$key]['updated_at'] = now();
+            $listing['created_at'] = now();
+            $listing['updated_at'] = now();
         }
 
         //insertamos los trabajos en la base de datos
