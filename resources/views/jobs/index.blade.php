@@ -5,6 +5,6 @@
             <x-job-card :job="$job" />
         @empty
             <p>No hay trabajos disponible</p>
-        @QAZ°
+        @endforelse
     </div>
 </x-layout>
