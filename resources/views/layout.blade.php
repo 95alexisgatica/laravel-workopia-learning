@@ -10,6 +10,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="//unpkg.com/alpinejs" defer></script>
     <title>{{ $title ?? 'Welcome To Workcopia' }}</title>
 </head>
 
@@ -20,6 +21,12 @@
         <x-top-banner />
     @endif
     <main class="container mx-auto p-4 mt-4">
+        @if (session('success'))
+            <x-alert type="success" message="{{ session('success') }}" timeout="3000" />
+        @endif
+        @if (session('error'))
+            <x-alert type="error" message="{{ session('error') }}" timeout="3000" />
+        @endif
         {{ $slot }}
     </main>
 
