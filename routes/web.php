@@ -7,8 +7,9 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//Route::resource('jobs', JobController::class);
-Route::resource('jobs', JobController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+Route::middleware('auth')->group(function () {
+    Route::resource('jobs', JobController::class)->only(['create', 'store', 'edit', 'update', 'destroy', 'show', 'index']);
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');

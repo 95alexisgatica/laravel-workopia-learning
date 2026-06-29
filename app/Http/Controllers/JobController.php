@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use App\Models\Job;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -36,12 +37,35 @@ class JobController extends Controller
         $validateData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'salary' => 'required|numeric',
+            'tags' => 'nullable|string',
+            'job_type' => 'required|string',
+            'remote' => 'required|boolean',
+            'requirements' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'zipcode' => 'nullable|string',
+            'contact_email' => 'required|string',
+            'contact_phone' => 'nullable|string',
+            'company_name' => 'required|string',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'company_website' => 'nullable|url',
+
         ]);
 
-        Job::create([
-            'title' => $validateData['title'],
-            'description' => $validateData['description']
-        ]);
+        $validateData['user_id'] = Auth::id();
+
+        if ($request->hasFile('company_logo')) {
+            $path = $request->file('company_logo')->store('public/logos', 'public');
+            $validateData['company_logo'] = $path;
+        }
+ 
+        $validateData['company_logo'] = $path ?? null;
+
+        Job::create($validateData);
 
         return redirect()->route('jobs.index');
     }
